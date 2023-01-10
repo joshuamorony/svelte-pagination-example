@@ -2,29 +2,7 @@
 	import { getArticlesForPage } from '$lib/data-access/articles';
 	import { derived, writable, type Readable } from 'svelte/store';
 
-	/*
-	import { scan, concatMap } from 'rxjs/operators';
-	import { SvelteSubject } from '$lib/utils/subject';
-
-	const currentPage$ = new SvelteSubject<number>(1);
-
-	const pageData$ = currentPage$.pipe(
-		// Get the data for the current page (make sure to get all pages)
-		concatMap((currentPage) => getArticlesForPage(currentPage)),
-		// Add it to the previous data
-		scan((prev, current) => [...prev, ...current])
-	);
-	*/
-
-	const currentPage$ = (() => {
-		const { set, update, subscribe } = writable<number>(1);
-		return {
-			set,
-			update,
-			subscribe,
-			next: () => update((p) => ++p)
-		};
-	})();
+	const currentPage$ = writable<number>(1);
 
 	let pageData$: Readable<number[]>;
 
@@ -40,6 +18,4 @@
 
 {$pageData$}
 
-<button on:click={() => currentPage$.next()}>Load more</button>
-
-<!--<button on:click={() => currentPage$.next(currentPage$.value + 1)}>Load more</button>-->
+<button on:click={() => currentPage$.update((p => ++p))}>Load more</button>
