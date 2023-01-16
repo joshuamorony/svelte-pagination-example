@@ -4,9 +4,7 @@
 
 	let searchTerm = writable('');
 
-	let employees: Readable<string[]>;
-
-	employees = derived(searchTerm, ($value, set) => {
+	let employees: Readable<string[]> = derived(searchTerm, ($value, set) => {
 		getEmployeesBySearchTerm($value).then(set);
 	});
 </script>
