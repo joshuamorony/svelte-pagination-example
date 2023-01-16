@@ -9,8 +9,10 @@
 	);
 </script>
 
+<h2>Fitler employees:</h2>
 <input type="text" bind:value={$searchTerm$} />
 
+<h2>Results:</h2>
 {#if $employees$}
 	<ul>
 		{#each $employees$ as employee}
